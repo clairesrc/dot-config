@@ -43,6 +43,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 
 Plugin 'severin-lemaignan/vim-minimap'
 
+Plugin 'editorconfig/editorconfig-vim'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
