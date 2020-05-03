@@ -1,63 +1,122 @@
-:set number
-:set autoindent
+call plug#begin('~/.vim/plugged')
 
-map <C-t><up> :tabr<cr>
-map <C-t><down> :tabl<cr>
-map <C-t><left> :tabp<cr>
-map <C-t><right> :tabn<cr>
-map <C-n> :NERDTreeToggle<CR>
+Plug 'junegunn/vim-easy-align'
 
+Plug 'scrooloose/nerdtree'
 
-if ! has("gui_running")
-    set t_Co=256
+Plug 'fatih/vim-go'
+
+Plug 'nsf/gocode'
+
+Plug 'vim-airline/vim-airline'
+
+Plug 'dense-analysis/ale'
+
+Plug 'https://github.com/airblade/vim-gitgutter.git'
+
+Plug 'https://github.com/godlygeek/tabular'
+
+Plug 'https://github.com/roxma/vim-tmux-clipboard'
+
+Plug 'https://github.com/tpope/vim-vinegar'
+
+Plug 'Valloric/YouCompleteMe'
+
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'kien/rainbow_parentheses.vim'
+
+Plug 'jiangmiao/auto-pairs'
+
+Plug 'vim-syntastic/syntastic'
+
+Plug 'dracula/vim', { 'as': 'dracula' }
+
+Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'severin-lemaignan/vim-minimap'
+
+Plug 'editorconfig/editorconfig-vim'
+
+call plug#end()
+
+if (has("termguicolors"))
+ set termguicolors
 endif
-set background=dark
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+colorscheme dracula
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+let g:airline_theme = 'dracula'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-
-Plugin 'crucerucalin/peaksea.vim'
-
-Plugin 'leafgarland/typescript-vim'
-
-Plugin 'scrooloose/nerdtree'
-
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-
-Plugin 'nathanaelkane/vim-indent-guides'
-
-Plugin 'severin-lemaignan/vim-minimap'
-
-Plugin 'editorconfig/editorconfig-vim'
-
-call vundle#end()            " required
 filetype plugin indent on    " required
+set nocursorcolumn
+set cursorline
+set nu
+set mouse=nvirh
+set mousemodel=popup_setpos
+set background=dark
+set nowrap
+set lazyredraw    " reduced screen flicker
+set breakindent
+set breakindentopt=sbr,shift:4
+set showbreak=↪>\  " ↪ space
+set autoindent smartindent tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+set whichwrap+=<,>,h,l,[,]
+set nobackup
+set nowritebackup
+set noswapfile
+set clipboard+=unnamedplus
 
-colorscheme peaksea
-autocmd vimenter * NERDTree
-
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 hi IndentGuidesOdd  ctermbg=black
 hi IndentGuidesEven ctermbg=darkgrey
 
 let g:indent_guides_enable_on_vim_startup = 1
 
-syntax on
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-set laststatus=2
-au BufRead,BufNewFile *.ts   setfiletype typescript
+au FileType go set noexpandtab
+au FileType go set shiftwidth=4
+au FileType go set softtabstop=4
+au FileType go set tabstop=4
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+
+let g:go_auto_sameids = 1
+
+let g:go_fmt_command = "goimports"
+
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
+
+autocmd vimenter * NERDTree
+
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-t>     <Esc>:tabnew<CR>
+nnoremap <C-w>  :q<CR>
+nnoremap <C-q>  :qa!<CR>
+
+map <C-n> :NERDTreeToggle<CR>
+
